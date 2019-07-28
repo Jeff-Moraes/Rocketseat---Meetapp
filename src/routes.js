@@ -20,6 +20,9 @@ routes.use(authMiddleware);
 routes.put('/users', UserController.update);
 
 routes.post('/meetup', MeetupController.store);
+routes.put('/meetup/:id', MeetupController.update);
+routes.get('/meetup/', MeetupController.index);
+routes.delete('/meetup/:id', MeetupController.delete);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
