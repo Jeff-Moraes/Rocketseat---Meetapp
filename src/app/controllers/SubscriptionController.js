@@ -4,6 +4,9 @@ import Meetup from '../models/Meetup';
 import User from '../models/User';
 import File from '../models/File';
 
+import Queue from '../../lib/Queue';
+import SubscriptionMail from '../jobs/SubscriptionMail';
+
 class SubscriptionController {
   async index(req, res) {
     const userSubscriptions = await Subscription.findAll({
@@ -75,6 +78,12 @@ class SubscriptionController {
     const subscription = await Subscription.create({
       user_id: user.id,
       meetup_id: meetup.id,
+      meetup_title: meetup.title,
+    });
+
+    await Queue.add(SubscriptionMail.key, {
+      meetup,
+      user,
     });
 
     return res.json(subscription);
