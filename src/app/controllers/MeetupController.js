@@ -26,7 +26,7 @@ class MeetupController {
       };
     }
 
-    const userMeetups = await Meetup.finddAll({
+    const userMeetups = await Meetup.findAll({
       where,
       include: [
         {
